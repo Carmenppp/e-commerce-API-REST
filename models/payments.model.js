@@ -3,14 +3,14 @@ import { db } from "../database/connection.database.js";
 
 const payTime = moment.utc().format('YYYY-MM-DDTHH:mm:ss');
 
-const createPayment = async ({ client_id, payment_id, pay_time=payTime, amount, currency }) => {
+const createPayment = async ({ order_id, payment_id, pay_time=payTime, amount, currency }) => {
     const query = {
         text: `
-        INSERT INTO payments (client_id, payment_id, pay_time, amount, currency)
+        INSERT INTO payments (order_id, payment_id, pay_time, amount, currency)
         VALUES ($1, $2, $3, $4, $5)
         RETURNING *
         `,
-        values: [client_id, payment_id, pay_time, amount, currency],
+        values: [order_id, payment_id, pay_time, amount, currency],
     };
     const { rows } = await db.query(query);
     return rows[0];

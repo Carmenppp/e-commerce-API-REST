@@ -38,8 +38,8 @@ const findOneById = async (id) => {
 const update = async ({ id, name, contactInfo }) => {
     const query = {
         text: `
-        UPDATE products
-        SET name = $2, contact_info = $3,
+        UPDATE suppliers
+        SET name = $2, contact_info = $3
         WHERE id = $1
         RETURNING *
         `,

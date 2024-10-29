@@ -147,6 +147,51 @@ export const swaggerOptions = {
             description: "Tokio",
           },
         },
+        Suppliers: {
+          type: "object",
+          required: ["name", "contactInfo"],
+          properties: {
+            name: {
+              type: "string",
+              description: "Nombre del proveedor",
+            },
+            contactInfo: {
+              type: "string",
+              description: "Contacto del proveedor"
+            }
+          },
+          example: {
+            name: "Proveedor SA",
+            contactInfo: "0923455"
+          },
+        },
+        Cart: {
+          type: "object",
+          required: ["userId", "productId", "quantity"],
+          properties: {
+            userId: {
+              type: "number",
+              description: "Id del usuario",
+            },
+            productId: {
+              type: "number",
+              description: "Id del producto"
+            },
+            quantity: {
+              type: "number",
+              description: "Cantidad de productos"
+            },
+            status: {
+              type: "string",
+              description: "Estado del carrito"
+            }
+          },
+          example: {
+            productId: 1,
+            quantity: 1,
+            status: "active"
+          }
+        }
       },
       securitySchemes: {
         bearerAuth: {

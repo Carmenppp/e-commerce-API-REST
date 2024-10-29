@@ -6,7 +6,7 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Users
+ *   name: Auth
  *   description: Endpoints para manejar autenticación de usuarios
  */
 
@@ -15,7 +15,7 @@ const router = Router();
  * /api/v1/users/register:
  *   post:
  *     summary: Registrar un nuevo usuario
- *     tags: [Users]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -35,7 +35,7 @@ router.post('/register', UserController.register);
  * /api/v1/users/login:
  *   post:
  *     summary: Iniciar sesión
- *     tags: [Users]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:

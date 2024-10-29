@@ -4,7 +4,7 @@ const create = async ({ userId, productId, quantity }) => {
     const query = {
         text: `
     INSERT INTO cart (user_id, product_id, quantity)
-    VALUES ($1, $2)
+    VALUES ($1, $2, $3)
     RETURNING id
     `,
         values: [userId, productId, quantity],
@@ -27,7 +27,7 @@ const findOneById = async (id) => {
     const query = {
         text: `
         SELECT * FROM cart
-        WHERE id = $1
+        WHERE id = $1 AND status = 'active'
         `,
         values: [id],
     };
@@ -62,7 +62,7 @@ const deleteById = async (id) => {
     return rows[0];
 }
 
-export const SuppliersModel = {
+export const CartModel = {
     create,
     findAll,
     findOneById,

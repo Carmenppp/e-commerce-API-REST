@@ -5,6 +5,8 @@ import productRouter from "./routes/product.route.js"
 import adamsPayRouter from "./routes/adamsPay.route.js";
 import categoryRouter from "./routes/categories.route.js";
 import brandRouter from "./routes/brands.route.js"
+import supplierRouter from "./routes/suppliers.route.js"
+import cartRouter from "./routes/cart.route.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from 'swagger-ui-express';
 import { swaggerOptions } from "./swaggerOptions.js";
@@ -31,7 +33,10 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/brands", brandRouter);
+app.use("/api/v1/suppliers", supplierRouter);
+app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/adamsPay", adamsPayRouter);
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log("Servidor andando en " + PORT));
