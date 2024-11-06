@@ -2,12 +2,15 @@ import { CartModel } from "../models/cart.model.js";
 
 const add = async (req, res) => {
     try {
-        console.log(req.email, req.id)
         const userId = req.id;
         const { productId, quantity } = req.body;
 
+        const parsedProductId = parseInt(productId, 10);
+        const parsedQuantity = parseInt(quantity, 10);
         const newCart = await CartModel.create({
-            userId, productId, quantity
+            userId,
+            productId: parsedProductId,
+            quantity: parsedQuantity
         });
 
         return res.status(201).json({ ok: true, msg: newCart });
@@ -20,30 +23,15 @@ const add = async (req, res) => {
     }
 };
 
-const getAll = async (req, res) => {
-    try {
-
-        const cart = await CartModel.findAll();
-
-        return res.json({ cart });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            ok: false,
-            msg: "Error server",
-        });
-    }
-};
-
 
 const getUserCart = async (req, res) => {
     try {
-        const id = req.params.id;
+        const id = req.id;
         
-        const cart = await CartModel.findOne(id);
+        const cart = await CartModel.findOneById(id);
 
         if (!cart) {
-            return res.status(404).json({ ok: false, msg: "No se encontró carrito activo" });
+            return res.status(404).json({ ok: false, msg: "No se encontró carrito" });
         }
 
         return res.json({ ok: true, cart });
@@ -61,7 +49,7 @@ const updateItem = async (req, res) => {
         const {  productId, quantity, status } = req.body;
         const id = req.params.id;
 
-        await CartController.update({
+        await CartModel.update({
            id, productId, quantity, status
         });
 
@@ -78,7 +66,7 @@ const updateItem = async (req, res) => {
 const remove = async (req, res) => {
     try {
         const id = req.params.id;
-        await CartController.deleteById(id);
+        await CartModel.deleteById(id);
         return res.json({ ok: true, msg: "Proveedor eliminada exitosamente" })
     } catch (error) {
         console.log(error);
@@ -91,7 +79,6 @@ const remove = async (req, res) => {
 
 export const CartController = {
     add,
-    getAll,
     getUserCart,
     updateItem,
     remove

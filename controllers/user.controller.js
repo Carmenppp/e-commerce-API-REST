@@ -6,7 +6,7 @@ const register = async (req, res) => {
   try {
     const { username, email, password, roleId, addressId, cityId } = req.body;
 
-    if (!email || !username || !password || !roleId || !addressId || !cityId) {
+    if ( !username || !email || !password || !roleId || !addressId || !cityId) {
       return res
         .status(400)
         .json({ ok: false, msg: "Username, email, password, rol, address y ciudad requeridos" });

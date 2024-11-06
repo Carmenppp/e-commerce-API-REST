@@ -51,7 +51,7 @@ router.post('/', verifyToken, CartController.add);
  *               items:
  *                 $ref: '#/components/schemas/Cart'
  */
-router.get('/', verifyToken, CartController.getAll)
+router.get('/', verifyToken, CartController.getUserCart)
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', verifyToken, CartController.getAll)
  *       404:
  *         description: Carrito no encontrado
  */
-router.get('/:id', verifyToken, CartController.getUserCart)
+// router.get('/:id', verifyToken, CartController.getUserCart)
 /**
  * @swagger
  * /api/v1/cart/{id}:

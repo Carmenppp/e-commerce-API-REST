@@ -1,13 +1,13 @@
 import { db } from "../database/connection.database.js";
 
-const create = async ({ userId, productId, quantity }) => {
+const create = async ({ description, departmentId }) => {
     const query = {
         text: `
-    INSERT INTO cart (user_id, product_id, quantity)
-    VALUES ($1, $2, $3)
+    INSERT INTO cities (description, department_id)
+    VALUES ($1, $2)
     RETURNING id
     `,
-        values: [userId, productId, quantity],
+        values: [description, departmentId],
     };
     const { rows } = await db.query(query);
     return rows[0];
@@ -16,7 +16,7 @@ const create = async ({ userId, productId, quantity }) => {
 const findAll = async () => {
     const query = {
         text: `
-        SELECT * FROM cart
+        SELECT * FROM cities
         `,
     };
     const { rows } = await db.query(query);
@@ -26,25 +26,24 @@ const findAll = async () => {
 const findOneById = async (id) => {
     const query = {
         text: `
-        SELECT cart.id, products.name, products.price, quantity FROM cart
-        JOIN products ON cart.product_id = products.id
-        WHERE user_id = $1 AND status = 'active'
+        SELECT * FROM cities
+        WHERE id = $1
         `,
         values: [id],
     };
     const { rows } = await db.query(query);
-    return rows;
+    return rows[0];
 }
 
-const update = async ({ id, userId, productId, quantity }) => {
+const update = async ({ id, description}) => {
     const query = {
         text: `
-        UPDATE cart
-        SET user_id = $2, product_id = $3, quantity = $4
+        UPDATE cities
+        SET  description = $2
         WHERE id = $1
         RETURNING *
         `,
-        values: [ id, userId, productId, quantity ],
+        values: [id, description],
     };
     const { rows } = await db.query(query);
     return rows[0];
@@ -53,7 +52,7 @@ const update = async ({ id, userId, productId, quantity }) => {
 const deleteById = async (id) => {
     const query = {
         text: `
-        DELETE FROM cart
+        DELETE FROM cities
         WHERE id = $1
         RETURNING *
       `,
@@ -63,7 +62,7 @@ const deleteById = async (id) => {
     return rows[0];
 }
 
-export const CartModel = {
+export const CitiesModel = {
     create,
     findAll,
     findOneById,

@@ -11,7 +11,6 @@ export const verifyToken = (req, res, next) => {
 
     try {
         const { id, email } = jwt.verify(token, process.env.JWT_SECRET)
-        console.log("Payload decodificado:", { id, email });
         req.email = email;
         req.id = id
         next();
