@@ -26,7 +26,7 @@ const findAll = async () => {
 const findOneById = async (id) => {
     const query = {
         text: `
-        SELECT cart.id, products.name, products.price, quantity FROM cart
+        SELECT cart.id, products.name, products.price, quantity, cart.created_at FROM cart
         JOIN products ON cart.product_id = products.id
         WHERE user_id = $1 AND status = 'active'
         `,
