@@ -4,12 +4,12 @@ import { tokenFunct } from "../token/tokenManager.js";
 
 const register = async (req, res) => {
   try {
-    const { username, email, password, roleId, addressId, cityId } = req.body;
+    const { username, email, password, addressId, cityId } = req.body;
 
-    if ( !username || !email || !password || !roleId || !addressId || !cityId) {
+    if ( !username || !email || !password || !addressId || !cityId) {
       return res
         .status(400)
-        .json({ ok: false, msg: "Username, email, password, rol, address y ciudad requeridos" });
+        .json({ ok: false, msg: "Username, email, password, address y ciudad requeridos" });
     }
 
     if (password.length < 4)
@@ -31,7 +31,6 @@ const register = async (req, res) => {
       email,
       password: hashedPassword,
       username,
-      roleId,
       addressId, 
       cityId
     });
@@ -93,8 +92,44 @@ const profile = async (req, res) => {
   }
 }
 
+const findAll = async (req, res) =>{
+  try {
+    const user = await UserModel.findAllM();
+    return res.json({ok: true, msg: user})
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error server",
+    });
+  }
+}
+
+const updateRoleSeller = async (req, res) => {
+  try {
+    const {id} = req.params
+    const user = await UserModel.findOneById(id);
+    if (!user) {
+      return res.status(404).json({ ok: false, msg: "User not found" });
+    }
+
+    const updatedSeller = await UserModel.updateRoleSeller(id)
+
+    return res.json({
+      ok: true,
+      msg: updatedSeller,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error server",
+    });
+  }
+}
+
 export const UserController = {
   register,
   login,
-  profile
+  profile, 
+  findAll,
+  updateRoleSeller
 };

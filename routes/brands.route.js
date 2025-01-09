@@ -51,7 +51,7 @@ router.post('/', verifyToken, BrandsController.add);
  *               items:
  *                 $ref: '#/components/schemas/Brand'
  */
-router.get('/', verifyToken, BrandsController.getAll)
+router.get('/', BrandsController.getAll)
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', verifyToken, BrandsController.getAll)
  *       404:
  *         description: Categoria no encontrada
  */
-router.get('/:id', verifyToken, BrandsController.findOne)
+router.get('/:id', BrandsController.findOne)
 /**
  * @swagger
  * /api/v1/brands/{id}:

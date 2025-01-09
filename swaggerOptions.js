@@ -191,7 +191,40 @@ export const swaggerOptions = {
             quantity: 1,
             status: "active"
           }
-        }
+        },
+        Inventory: {
+          type: "object",
+          required: ["productId", "quantity"],
+          properties: {
+            productId: {
+              type: "integer",
+              description: "ID del producto",
+            },
+            quantity: {
+              type: "integer",
+              description: "cantidad del producto",
+            },
+            movementType: {
+              type: "string",
+              description: "tipo movimiento",
+            },
+            description: {
+              type: "string",
+              description: "descripcion del producto",
+            },
+            movementDate: {
+              type: "date",
+              description: "fecha del movimiento",
+            },
+          },
+          example: {
+            productId: 1,
+            quantity: 50,
+            movementType: "Compra de productos",
+            description: "compra de compus hp",
+            movementDate: '2025-01-07', 
+          },
+        },
       },
       securitySchemes: {
         bearerAuth: {

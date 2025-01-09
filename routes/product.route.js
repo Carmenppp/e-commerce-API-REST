@@ -51,7 +51,7 @@ router.post('/', verifyToken, ProductController.add);
  *               items:
  *                 $ref: '#/components/schemas/Product'
  */
-router.get('/', verifyToken, ProductController.getAll)
+router.get('/', ProductController.getAll)
 
 /**
  * @swagger

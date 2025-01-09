@@ -1,14 +1,15 @@
 import jwt from "jsonwebtoken";
 
 export const tokenFunct = (req, res) => {
-  const { email, id } = req;
+  const { email, id, role_id } = req;
  
   try {
 
     const token = jwt.sign(
       {
         email: email,
-        id: id 
+        id: id,
+        role_id: role_id
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }

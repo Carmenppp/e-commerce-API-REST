@@ -10,6 +10,9 @@ import cartRouter from "./routes/cart.route.js";
 import roleRouter from "./routes/role.route.js";
 import shippingRouter from "./routes/shippingAdress.route.js";
 import citiesRouter from "./routes/cities.route.js";
+import orderRouter from "./routes/orders.route.js"
+import orderDetailRouter from "./routes/orderDetail.route.js"
+import inventoryRouter from "./routes/orderDetail.route.js"
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from 'swagger-ui-express';
 import { swaggerOptions } from "./swaggerOptions.js";
@@ -42,6 +45,9 @@ app.use("/api/v1/role", roleRouter);
 app.use("/api/v1/cities", citiesRouter);
 app.use("/api/v1/shippingAd", shippingRouter);
 app.use("/api/v1/adamsPay", adamsPayRouter);
+app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/orderDetail", orderDetailRouter);
+app.use("/api/v1/inventory", inventoryRouter)
 
 const PORT = process.env.PORT || 3000;
 

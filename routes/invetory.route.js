@@ -1,21 +1,21 @@
 import { Router } from "express";
-import { CategoriesController } from "../controllers/categories.controller.js";
+import { InventoryController } from "../controllers/inventory.controller.js";
 import { verifyToken } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Categories
- *   description: Endpoints para manejar categorias
+ *   name: Cart
+ *   description: Endpoints para manejar carritos
  */
 
 /**
  * @swagger
- * /api/v1/categories:
+ * /api/v1/cart:
  *   post:
- *     summary: Añadir una nueva categoria
- *     tags: [Categories]
+ *     summary: Añadir una nueva carritos
+ *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -23,42 +23,42 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Category'
+ *             $ref: '#/components/schemas/Cart'
  *     responses:
  *       201:
- *         description: Categoria añadida correctamente
+ *         description: Carrito añadido correctamente
  *       400:
  *         description: Error en la solicitud
  */
 
-router.post('/', verifyToken, CategoriesController.add);
+router.post('/', verifyToken, InventoryController.add);
 
 /**
  * @swagger
- * /api/v1/categories:
+ * /api/v1/cart:
  *   get:
- *     summary: Obtener todas las categorias
- *     tags: [Categories]
+ *     summary: Obtener todas las carrito
+ *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Lista de categorias
+ *         description: Lista de carritos
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Category'
+ *                 $ref: '#/components/schemas/Cart'
  */
-router.get('/', CategoriesController.getAll)
+router.get('/', verifyToken, InventoryController.getAll)
 
 /**
  * @swagger
- * /categories/{id}:
+ * /api/v1/cart/{id}:
  *   get:
- *     summary: Obtener una categoria por ID
- *     tags: [Categories]
+ *     summary: Obtener una Carrito por ID
+ *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -70,21 +70,21 @@ router.get('/', CategoriesController.getAll)
  *         description: ID de la categoria
  *     responses:
  *       200:
- *         description: Categoria encontrado
+ *         description: Carrito encontrado
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Category'
+ *               $ref: '#/components/schemas/Cart'
  *       404:
- *         description: Categoria no encontrada
+ *         description: Carrito no encontrado
  */
-router.get('/:id', verifyToken, CategoriesController.findOne)
+ router.get('/:id', InventoryController.findOne)
 /**
  * @swagger
- * /categories/{id}:
+ * /api/v1/cart/{id}:
  *   patch:
- *     summary: Actualizar una categoria por ID
- *     tags: [Products]
+ *     summary: Actualizar un carrito por ID
+ *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -93,26 +93,26 @@ router.get('/:id', verifyToken, CategoriesController.findOne)
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID de la categoria
+ *         description: ID del proveedor
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Category'
+ *             $ref: '#/components/schemas/Cart'
  *     responses:
  *       200:
- *         description: Categoria actualizada correctamente
+ *         description: Carrito actualizada correctamente
  *       404:
- *         description: Categoria no encontrada
+ *         description: Carrito no encontrado
  */
-router.patch('/:id', verifyToken, CategoriesController.updateItem)
+router.patch('/:id', verifyToken, InventoryController.updateItem)
 /**
  * @swagger
- * /categories/{id}:
+ * /api/v1/cart/{id}:
  *   delete:
- *     summary: Eliminar una categoria por ID
- *     tags: [Categories]
+ *     summary: Eliminar un carrito por ID
+ *     tags: [Cart]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -121,13 +121,13 @@ router.patch('/:id', verifyToken, CategoriesController.updateItem)
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID de la categoria
+ *         description: ID del carrito
  *     responses:
  *       200:
- *         description: Categoria eliminada correctamente
+ *         description: Carrito eliminado correctamente
  *       404:
- *         description: Categoria no encontrada
+ *         description: Carrito no encontrado
  */
-router.delete('/:id', verifyToken, CategoriesController.remove)
+router.delete('/:id', verifyToken, InventoryController.remove)
 
 export default router;
