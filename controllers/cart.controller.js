@@ -43,6 +43,25 @@ const getUserCart = async (req, res) => {
         });
     }
 };
+const getCartById = async (req, res) => {
+    try {
+        const {id} = req.body;
+        
+        const cart = await CartModel.findOneById(id);
+
+        if (!cart) {
+            return res.status(404).json({ ok: false, msg: "No se encontró carrito" });
+        }
+
+        return res.json({ ok: true, cart });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: "Error server",
+        });
+    }
+};
 
 const updateItem = async (req, res) => {
     try {
@@ -78,6 +97,7 @@ const remove = async (req, res) => {
 }
 
 export const CartController = {
+    getCartById,
     add,
     getUserCart,
     updateItem,

@@ -32,7 +32,7 @@ const router = Router();
  */
 
 router.post('/', verifyToken, CartController.add);
-
+router.post('/getcart', verifyToken, CartController.getCartById);
 /**
  * @swagger
  * /api/v1/cart:

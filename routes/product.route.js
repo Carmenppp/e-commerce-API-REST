@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ProductController } from "../controllers/products.controller.js";
-import { verifyToken } from "../middlewares/jwt.middleware.js";
+import { verifyToken, verifyAdmin } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 /**
@@ -31,7 +31,7 @@ const router = Router();
  *         description: Error en la solicitud
  */
 
-router.post('/', verifyToken, ProductController.add);
+router.post('/', verifyToken, verifyAdmin,ProductController.add);
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', ProductController.getAll)
  *       404:
  *         description: Producto no encontrado
  */
-router.get('/:id', verifyToken, ProductController.findOne)
+router.get('/:id', verifyToken, verifyAdmin, ProductController.findOne)
 /**
  * @swagger
  * /api/v1/products/{id}:
@@ -106,7 +106,7 @@ router.get('/:id', verifyToken, ProductController.findOne)
  *       404:
  *         description: Producto no encontrado
  */
-router.patch('/:id', verifyToken, ProductController.updateItem)
+router.patch('/:id', verifyToken, verifyAdmin, ProductController.updateItem)
 /**
  * @swagger
  * /api/v1/products/{id}:
@@ -128,6 +128,6 @@ router.patch('/:id', verifyToken, ProductController.updateItem)
  *       404:
  *         description: Producto no encontrado
  */
-router.delete('/:id', verifyToken, ProductController.remove)
+router.delete('/:id', verifyToken, verifyAdmin, ProductController.remove)
 
 export default router;

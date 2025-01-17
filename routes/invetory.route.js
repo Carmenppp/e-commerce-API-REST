@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { InventoryController } from "../controllers/inventory.controller.js";
-import { verifyToken } from "../middlewares/jwt.middleware.js";
+import { verifyToken, verifyAdmin } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 /**
@@ -31,7 +31,7 @@ const router = Router();
  *         description: Error en la solicitud
  */
 
-router.post('/', verifyToken, InventoryController.add);
+router.post('/', verifyToken, verifyAdmin, InventoryController.add);
 
 /**
  * @swagger
@@ -51,7 +51,7 @@ router.post('/', verifyToken, InventoryController.add);
  *               items:
  *                 $ref: '#/components/schemas/Cart'
  */
-router.get('/', verifyToken, InventoryController.getAll)
+router.get('/', verifyToken, verifyAdmin,InventoryController.getAll)
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', verifyToken, InventoryController.getAll)
  *       404:
  *         description: Carrito no encontrado
  */
- router.get('/:id', InventoryController.findOne)
+ router.get('/:id', verifyToken, verifyAdmin, InventoryController.findOne)
 /**
  * @swagger
  * /api/v1/cart/{id}:
@@ -106,7 +106,7 @@ router.get('/', verifyToken, InventoryController.getAll)
  *       404:
  *         description: Carrito no encontrado
  */
-router.patch('/:id', verifyToken, InventoryController.updateItem)
+router.patch('/:id', verifyToken, verifyAdmin, InventoryController.updateItem)
 /**
  * @swagger
  * /api/v1/cart/{id}:
@@ -128,6 +128,6 @@ router.patch('/:id', verifyToken, InventoryController.updateItem)
  *       404:
  *         description: Carrito no encontrado
  */
-router.delete('/:id', verifyToken, InventoryController.remove)
+router.delete('/:id', verifyToken, verifyAdmin, InventoryController.remove)
 
 export default router;

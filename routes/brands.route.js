@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { BrandsController } from "../controllers/brands.controller.js"; 
-import { verifyToken } from "../middlewares/jwt.middleware.js";
+import { verifyToken, verifyAdmin } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 /**
@@ -31,7 +31,7 @@ const router = Router();
  *         description: Error en la solicitud
  */
 
-router.post('/', verifyToken, BrandsController.add);
+router.post('/', verifyToken, verifyAdmin, BrandsController.add);
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', BrandsController.getAll)
  *       404:
  *         description: Categoria no encontrada
  */
-router.get('/:id', BrandsController.findOne)
+router.get('/:id', verifyToken, verifyAdmin, BrandsController.findOne)
 /**
  * @swagger
  * /api/v1/brands/{id}:
@@ -106,7 +106,7 @@ router.get('/:id', BrandsController.findOne)
  *       404:
  *         description: Marca no encontrada
  */
-router.patch('/:id', verifyToken, BrandsController.updateItem)
+router.patch('/:id', verifyToken, verifyAdmin, BrandsController.updateItem)
 /**
  * @swagger
  * /api/v1/brands/{id}:
@@ -128,6 +128,6 @@ router.patch('/:id', verifyToken, BrandsController.updateItem)
  *       404:
  *         description: Marca no encontrada
  */
-router.delete('/:id', verifyToken, BrandsController.remove)
+router.delete('/:id', verifyToken, verifyAdmin, BrandsController.remove)
 
 export default router;

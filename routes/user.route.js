@@ -10,7 +10,7 @@ const router = Router();
  *   name: Auth
  *   description: Endpoints para manejar autenticación de usuarios
  */
-router.get('/listus', verifyToken, verifyAdmin, UserController.findAll);
+router.get('/listusers', verifyToken, verifyAdmin, UserController.findAll);
 /**
  * @swagger
  * /api/v1/users/register:
@@ -52,5 +52,7 @@ router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 
 router.put('/role-update-seller/:id', verifyToken, verifyAdmin, UserController.updateRoleSeller)
+
+router.get('/profile', verifyToken, UserController.profile)
 
 export default router;

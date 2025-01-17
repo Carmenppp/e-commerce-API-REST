@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { SuppliersController } from "../controllers/suppliers.controller.js";
-import { verifyToken } from "../middlewares/jwt.middleware.js";
+import { verifyToken, verifyAdmin } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 /**
@@ -31,7 +31,7 @@ const router = Router();
  *         description: Error en la solicitud
  */
 
-router.post('/', verifyToken, SuppliersController.add);
+router.post('/', verifyToken, verifyAdmin, SuppliersController.add);
 
 /**
  * @swagger
@@ -51,7 +51,7 @@ router.post('/', verifyToken, SuppliersController.add);
  *               items:
  *                 $ref: '#/components/schemas/Suppliers'
  */
-router.get('/', verifyToken, SuppliersController.getAll)
+router.get('/', verifyToken, verifyAdmin, SuppliersController.getAll)
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', verifyToken, SuppliersController.getAll)
  *       404:
  *         description: Proveedor no encontrado
  */
-router.get('/:id', verifyToken, SuppliersController.findOne)
+router.get('/:id', verifyToken, verifyAdmin, SuppliersController.findOne)
 /**
  * @swagger
  * /api/v1/suppliers/{id}:
@@ -106,7 +106,7 @@ router.get('/:id', verifyToken, SuppliersController.findOne)
  *       404:
  *         description: Proveedor no encontrado
  */
-router.patch('/:id', verifyToken, SuppliersController.updateItem)
+router.patch('/:id', verifyToken, verifyAdmin, SuppliersController.updateItem)
 /**
  * @swagger
  * /api/v1/suppliers/{id}:
@@ -128,6 +128,6 @@ router.patch('/:id', verifyToken, SuppliersController.updateItem)
  *       404:
  *         description: Proveedor no encontrado
  */
-router.delete('/:id', verifyToken, SuppliersController.remove)
+router.delete('/:id', verifyToken, verifyAdmin, SuppliersController.remove)
 
 export default router;

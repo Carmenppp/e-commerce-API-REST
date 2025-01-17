@@ -1,13 +1,13 @@
 import { db } from "../database/connection.database.js";
 
-const create = async ({ userId, status, deliveredAt }) => {
+const create = async ({ userId, status, deliveredAt, client_id }) => {
     const query = {
         text: `
-    INSERT INTO orders (user_id, status, delivered_at)
-    VALUES ($1, $2, $3)
+    INSERT INTO orders (user_id, status, delivered_at, client_id)
+    VALUES ($1, $2, $3, $4)
     RETURNING id
     `,
-        values: [userId, status, deliveredAt],
+        values: [userId, status, deliveredAt, client_id],
     };
     const { rows } = await db.query(query);
     return rows[0];

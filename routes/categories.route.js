@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { CategoriesController } from "../controllers/categories.controller.js";
-import { verifyToken } from "../middlewares/jwt.middleware.js";
+import { verifyToken, verifyAdmin } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 /**
@@ -31,7 +31,7 @@ const router = Router();
  *         description: Error en la solicitud
  */
 
-router.post('/', verifyToken, CategoriesController.add);
+router.post('/', verifyToken, verifyAdmin, CategoriesController.add);
 
 /**
  * @swagger
@@ -78,7 +78,7 @@ router.get('/', CategoriesController.getAll)
  *       404:
  *         description: Categoria no encontrada
  */
-router.get('/:id', verifyToken, CategoriesController.findOne)
+router.get('/:id', verifyToken, verifyAdmin, CategoriesController.findOne)
 /**
  * @swagger
  * /categories/{id}:
@@ -106,7 +106,7 @@ router.get('/:id', verifyToken, CategoriesController.findOne)
  *       404:
  *         description: Categoria no encontrada
  */
-router.patch('/:id', verifyToken, CategoriesController.updateItem)
+router.patch('/:id', verifyToken, verifyAdmin, CategoriesController.updateItem)
 /**
  * @swagger
  * /categories/{id}:
@@ -128,6 +128,6 @@ router.patch('/:id', verifyToken, CategoriesController.updateItem)
  *       404:
  *         description: Categoria no encontrada
  */
-router.delete('/:id', verifyToken, CategoriesController.remove)
+router.delete('/:id', verifyToken, verifyAdmin, CategoriesController.remove)
 
 export default router;

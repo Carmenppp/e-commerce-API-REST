@@ -2,10 +2,10 @@ import { OrdersModel } from "../models/orders.model.js";
 
 const add = async (req, res) => {
     try {
-        const { userId, status } = req.body;
+        const { userId, status, deliveredAt, client_id} = req.body;
 
         const newOrder = await OrdersModel.create({
-            userId, status 
+            userId, status, deliveredAt, client_id
         });
 
         return res.status(201).json({ ok: true, msg: newOrder });

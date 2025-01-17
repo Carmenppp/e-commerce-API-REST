@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
-export const tokenFunct = (req, res) => {
-  const { email, id, role_id } = req;
+export const tokenFunct = (user) => {
+  const { email, id, role_id } = user;
  
   try {
 

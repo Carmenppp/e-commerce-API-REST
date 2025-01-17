@@ -1,37 +1,10 @@
 import { Router } from "express";
-import { OrderDetailController } from "../controllers/order_detail.controller.js"; 
-import { verifyToken } from "../middlewares/jwt.middleware.js";
+import { InvoiceController } from "../controllers/invoice.controller.js";
+import { verifyToken, verifyAdmin } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
-/**
- * @swagger
- * tags:
- *   name: Cart
- *   description: Endpoints para manejar carritos
- */
 
-/**
- * @swagger
- * /api/v1/cart:
- *   post:
- *     summary: Añadir una nueva carritos
- *     tags: [Cart]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Cart'
- *     responses:
- *       201:
- *         description: Carrito añadido correctamente
- *       400:
- *         description: Error en la solicitud
- */
-
-router.post('/', verifyToken, OrderDetailController.add);
+router.post('/:orderId/:invoiceId', verifyToken, verifyAdmin, InvoiceController.add);
 
 /**
  * @swagger
@@ -51,7 +24,7 @@ router.post('/', verifyToken, OrderDetailController.add);
  *               items:
  *                 $ref: '#/components/schemas/Cart'
  */
-router.get('/', verifyToken, OrderDetailController.getAll)
+router.get('/', verifyToken, verifyAdmin, InvoiceController.getAll)
 
 /**
  * @swagger
@@ -78,7 +51,7 @@ router.get('/', verifyToken, OrderDetailController.getAll)
  *       404:
  *         description: Carrito no encontrado
  */
-// router.get('/:id', verifyToken, CartController.getUserCart)
+ router.get('/:id', verifyToken, verifyAdmin, InvoiceController.findOne)
 /**
  * @swagger
  * /api/v1/cart/{id}:
@@ -106,28 +79,9 @@ router.get('/', verifyToken, OrderDetailController.getAll)
  *       404:
  *         description: Carrito no encontrado
  */
-router.patch('/:id', verifyToken, OrderDetailController.updateItem)
-/**
- * @swagger
- * /api/v1/cart/{id}:
- *   delete:
- *     summary: Eliminar un carrito por ID
- *     tags: [Cart]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: ID del carrito
- *     responses:
- *       200:
- *         description: Carrito eliminado correctamente
- *       404:
- *         description: Carrito no encontrado
- */
-router.delete('/:id', verifyToken, OrderDetailController.remove)
+router.patch('/:orderId/:invoiceId', verifyToken, verifyAdmin, InvoiceController.updateItem)
+
+
+router.delete('/:orderId/:invoiceId', verifyToken, verifyAdmin, InvoiceController.remove)
 
 export default router;

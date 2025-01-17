@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { CitiesController } from "../controllers/cities.controller.js";
-import { verifyToken } from "../middlewares/jwt.middleware.js";
+import { verifyToken, verifyAdmin } from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 

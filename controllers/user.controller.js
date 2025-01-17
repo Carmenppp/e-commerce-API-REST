@@ -35,7 +35,11 @@ const register = async (req, res) => {
       cityId
     });
     const token = tokenFunct(userCreated, res);
-    return res.status(201).json({ ok: true, token: token });
+
+    return res.status(201).json({ ok: true, msg: {
+      token, role_id: userCreated.role_id
+    } });
+
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -66,9 +70,11 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Credenciales invalidas" });
     }
     
-    const token = tokenFunct(user, res);
+    const token = tokenFunct(user);
 
-    return res.json({ ok: true, token: token });
+    return res.json({ ok: true, msg: {
+      token, role_id: user.role_id
+    } });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -81,8 +87,14 @@ const login = async (req, res) => {
 
 const profile = async (req, res) => {
   try {
+    if (!req.email) {
+      return res.status(400).json({
+        ok: false,
+        msg: "Email is missing from the request",
+      });
+    }
     const user = await UserModel.findOneByEmail(req.email)
-    return res.json({ ok: true, msg: user })
+    return res.json({ ok: true, user: user })
   } catch (error) {
     console.log(error);
     return res.status(500).json({
